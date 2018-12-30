@@ -10,7 +10,7 @@ import {
     withRouter
 } from "react-router-dom";
 import LoginPage from './pages/login/LoginPage';
-import { NotificationsPageContainer } from './pages/notifications/NotificationsPageContainer';
+import { NotificationsPage } from './pages/notifications/NotificationsPage';
 import {PrivateRoute} from "./pages/utilities/PrivateRoute";
 
 const styles = theme => ({
@@ -48,7 +48,7 @@ class App extends Component {
                             <Redirect to="/notifications"/> :
                             <Redirect to="/login" />}
                         <Route path="/login" component={LoginPage} />
-                        <PrivateRoute path="/notifications" component={NotificationsPageContainer} />
+                        <PrivateRoute path="/notifications" component={NotificationsPage} />
                     </div>
                 </Router>
             </div>
