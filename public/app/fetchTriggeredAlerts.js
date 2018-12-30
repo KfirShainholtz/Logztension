@@ -25,6 +25,13 @@ function getLastTriggerDate(items) {
     return last;
 }
 
+function addTriggeredAlert(target, newData) {
+    if(target.length > 10) {
+        target.shift();
+    }
+    target.push(newData[0]);
+}
+
 function handleTriggeredAlerts() {
     if (this.readyState === XMLHttpRequest.DONE) {
         if(this.status === 200) {
@@ -34,7 +41,8 @@ function handleTriggeredAlerts() {
 
             chrome.storage.sync.get('triggeredAlerts', ({ triggeredAlerts }) => {
                 if(response.lastAlert > getLastTriggerDate(triggeredAlerts.results)) {
-                    updateBadge(response);
+                    addTriggeredAlert(triggeredAlerts.results, response.results);
+                    updateBadge(triggeredAlerts);
                 }
             });
         }
