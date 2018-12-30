@@ -9,7 +9,7 @@ const styles = theme => ({
     root: {
         height: '100%',
         display: 'flex',
-        flexDirection: 'column',       
+        flexDirection: 'column',
     },
     logoContainer: {
         backgroundColor: '#0B7CAD',
@@ -27,20 +27,20 @@ const styles = theme => ({
 });
 
 class LoginPage extends React.Component {
-    
+
     state = {
         isConnected: null,
     };
 
     componentWillMount() {
-        chrome.storage.sync.get('apiToken', ({ authToken }) => {
-            this.setState({isConnected: Boolean(authToken)});
+        chrome.storage.sync.get('apiToken', ({ apiToken }) => {
+            this.setState({isConnected: Boolean(apiToken)});
         });
     }
 
     handleSubmit(values, actions) {
         actions.setSubmitting(true);
-        
+
         //TODO: check token via API
         setTimeout(() => {
             console.log('values', values);
@@ -54,20 +54,20 @@ class LoginPage extends React.Component {
     render() {
 
         const { classes } = this.props;
-        
+
         if(this.state.isConnected) {
             return (<Redirect to="/notifications"/>);
         }
 
         return (
             <div className={classes.root}>
-            
+
                 <Grid container justify={'center'} className={classes.logoContainer}>
-                    <img className={classes.logo} 
-                        src="logo_white.png" 
+                    <img className={classes.logo}
+                        src="logo_white.png"
                         alt="logo" />
                 </Grid>
-                
+
                 <div className={classes.formContainer}>
                     <Formik
                         initialValues={{ token: '' }}
@@ -82,11 +82,11 @@ class LoginPage extends React.Component {
                                         <Field
                                             name="token"
                                             render={({ field, form: { isSubmitting } }) => (
-                                                <TextField {...field} 
-                                                    label="API Token" 
-                                                    type="text" 
-                                                    placeholder="XXXXXXX-XXXX-XXXX-XXXX-XXXXXXXX" 
-                                                    fullWidth 
+                                                <TextField {...field}
+                                                    label="API Token"
+                                                    type="text"
+                                                    placeholder="XXXXXXX-XXXX-XXXX-XXXX-XXXXXXXX"
+                                                    fullWidth
                                                     required
                                                     disabled={isSubmitting}
                                                     size='small'
@@ -98,9 +98,9 @@ class LoginPage extends React.Component {
 
                                 <Grid container alignItems="center" justify="space-between" className={classes.formRow}>
                                     <Grid item>
-                                        <Button disableFocusRipple disableRipple 
-                                            style={{ textTransform: "none" }} 
-                                            variant="text" 
+                                        <Button disableFocusRipple disableRipple
+                                            style={{ textTransform: "none" }}
+                                            variant="text"
                                             color="primary"
                                             size="small"
                                             href='https://app.logz.io/#/dashboard/settings/api-tokens'
@@ -111,7 +111,7 @@ class LoginPage extends React.Component {
                                 </Grid>
 
                                 <Grid container justify="center" className={classes.formRow}>
-                                    <Button variant="outlined" 
+                                    <Button variant="outlined"
                                         color="primary"
                                         disabled={isSubmitting}
                                         style={{ textTransform: "none" }}

@@ -1,3 +1,5 @@
+/* global chrome */
+
 var baseUrl = 'http://k8s-1-prod-us-east-1.internal.logz.io:30004';
 var triggeredAlertsUrl = `${baseUrl}/alerts/triggered-alerts`;
 

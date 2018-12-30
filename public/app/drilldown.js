@@ -1,3 +1,5 @@
+/* global chrome */
+
 const contextMenuId = "scrapeIps";
 const drilldownUrlTemplate = (ip) => `https://app.logz.io/#/dashboard/kibana/dashboard/2e831c30-0c42-11e9-9294-97c78f8e487b?_g=()&switchToAccountId=16987&drilldown=${ip}`;
 
