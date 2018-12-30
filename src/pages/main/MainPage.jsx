@@ -10,9 +10,17 @@ const styles = theme => ({
         display: 'flex',
         flexDirection: 'column',
     },
+    topMenu: {
+        backgroundColor: '#0B7CAD',
+    },
     contentContainer: {
         marginTop: 8,
-    }
+    },
+    stickToBottom: {
+        width: '100%',
+        position: 'fixed',
+        bottom: 0,
+      },
 });
 
 class MainPage extends React.Component {
@@ -41,18 +49,19 @@ class MainPage extends React.Component {
                     path="/"
                     render={({ location }) => (
                     <AppBar position="static">
-                        <Tabs value={location.pathname}>
+                        <Tabs value={location.pathname} className={classes.topMenu}>
                             <Tab label="Notifications" component={Link} to="/notification" />
                         </Tabs>
                     </AppBar>
                 )} />
 
                 <Grid container justify={'center'} className={classes.contentContainer}>
-                    <Redirect from="/" to="/notification" />
+                    <Redirect from="/" to="/notification" /> {/* default state */}
                     <Route path="/notification" component={NotificationsPage} />
                 </Grid>
 
                 <BottomNavigation
+                    className={classes.stickToBottom}
                     onChange={this.handleBottomNavigationChange.bind(this)}
                     showLabels
                 >
