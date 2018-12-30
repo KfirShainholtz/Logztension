@@ -56,7 +56,7 @@ class LoginPage extends React.Component {
         const { classes } = this.props;
 
         if(this.state.isConnected) {
-            return (<Redirect to="/notifications"/>);
+            return (<Redirect to="/"/>);
         }
 
         return (
