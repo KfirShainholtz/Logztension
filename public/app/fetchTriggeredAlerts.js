@@ -4,25 +4,39 @@ var triggeredAlertsUrl = `${baseUrl}/alerts/triggered-alerts`;
 var requestData = JSON.stringify({
     "from": 0,
     "size": 1,
-    "severities": [
-        "HIGH"
-    ],
+    "severities": ["LOW", "MEDIUM", "HIGH"],
     "sortBy": "DATE",
     "sortOrder": "DESC"
 });
 
 function updateBadge(triggeredAlertsResponse) {
-    triggeredAlertsResponse.mish = Date.now();
     chrome.storage.sync.set({'triggeredAlerts': triggeredAlertsResponse});
     chrome.browserAction.setBadgeText({"text": String(triggeredAlertsResponse.results.length)});
     chrome.browserAction.setBadgeBackgroundColor({color: 'red'});
+}
+
+function getLastTriggerDate(items) {
+    let last = 0;
+    items.map((item) => {
+        if(last < item.eventDate) {
+            last = item.eventDate;
+        }
+    });
+    return last;
 }
 
 function handleTriggeredAlerts() {
     if (this.readyState === XMLHttpRequest.DONE) {
         if(this.status === 200) {
             var response = JSON.parse(this.response);
-            updateBadge(response);
+            console.log('handleTriggeredAlerts: ', response);
+            response.lastAlert = getLastTriggerDate(response.results);
+
+            chrome.storage.sync.get('triggeredAlerts', ({ triggeredAlerts }) => {
+                if(response.lastAlert > getLastTriggerDate(triggeredAlerts.results)) {
+                    updateBadge(response);
+                }
+            });
         }
         setTimeout(() => getLatestTriggeredAlerts(), 5000);
     }
