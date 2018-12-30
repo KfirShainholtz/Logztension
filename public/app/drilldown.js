@@ -1,5 +1,5 @@
 const contextMenuId = "scrapeIps";
-const drilldownUrlTemplate = (ip) => `https://app.logz.io/#/dashboard/kibana/dashboard/2e831c30-0c42-11e9-9294-97c78f8e487b?drilldown=${ip}`
+const drilldownUrlTemplate = (ip) => `https://app.logz.io/#/dashboard/kibana/dashboard/2e831c30-0c42-11e9-9294-97c78f8e487b?_g=()&switchToAccountId=16987&drilldown=${ip}`;
 
 const contextMenuItem = {
     "id": contextMenuId,
@@ -19,7 +19,7 @@ chrome.contextMenus.onClicked.addListener((data) => {
 
 const drilldown = (address) => {
     const drilldownUrl = drilldownUrlTemplate(address);
-    chrome.tabs.create({ url: drilldownUrl });
+    chrome.tabs.create({url: drilldownUrl});
 };
 
 const IsIPaddress = (address) => {
