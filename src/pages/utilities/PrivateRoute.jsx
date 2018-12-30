@@ -9,8 +9,8 @@ export class PrivateRoute extends React.Component {
     };
 
     componentWillMount() {
-        chrome.storage.sync.get('authToken',
-            ({authToken}) => this.setState({isConnected: Boolean(authToken), isLoading: false}));
+        chrome.storage.sync.get('apiToken',
+            ({apiToken}) => this.setState({isConnected: Boolean(apiToken), isLoading: false}));
     }
 
     render() {

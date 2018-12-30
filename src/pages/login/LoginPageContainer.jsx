@@ -3,15 +3,15 @@
 import React from "react";
 import {Redirect} from "react-router-dom";
 
-export class LoginPage extends React.Component {
+export class LoginPageContainer extends React.Component {
     state = {
         isConnected: null,
         isLoading: true,
     };
 
     componentWillMount() {
-        chrome.storage.sync.get('authToken',
-            ({authToken}) => this.setState({isConnected: Boolean(authToken), isLoading: false}));
+        chrome.storage.sync.get('apiToken',
+            ({apiToken}) => this.setState({isConnected: Boolean(apiToken), isLoading: false}));
     }
 
     render() {
@@ -22,7 +22,7 @@ export class LoginPage extends React.Component {
         return (
             <div>
                 {this.state.isConnected ?
-                    <Redirect to="/notifications"/> :
+                    <Redirect to="/"/> :
                     loginForm}
             </div>)
     }
