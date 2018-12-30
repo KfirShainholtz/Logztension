@@ -47,7 +47,7 @@ async function notifyUser(triggeredAlert) {
         type: "basic",
         title: `${triggeredAlert.severity} Severity Alert`,
         message: `${triggeredAlert.name}`,
-        iconUrl: "logzio.logo.128.png",
+        iconUrl: "alerts events 1.png",
     }
 
     await clearAll();
