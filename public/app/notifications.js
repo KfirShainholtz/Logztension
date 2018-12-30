@@ -1,9 +1,11 @@
-chrome.storage.onChanged.addListener(function({ triggeredAlerts: { newValue: { results }} }, namespace) {
-    console.log('chrome.storage.onChanged: ', results, namespace);
+const trigeredAlertDrillDown = "https://app.logz.io/#/dashboard/kibana/discover?_a=(columns:!(message),filters:!(),query:(language:lucene,query:'type:%20auto-scaler%20AND%20%22error%20occurred%20while%20calculating%20execution%20for%20autoScalingGroup%22%20AND%20NOT%20%22io.logz.auto.scaler.exception.ServersRateNotFound%22'),sort:!('@timestamp',desc))&_g=(refreshInterval:(display:Off,section:0,value:0),time:(from:'2018-12-26T20:39:52.925Z',mode:absolute,to:'2018-12-29T20:39:52.925Z'))&accountIds=16987&accountIds=300";
 
-    if (results) {
-        results.map((alert) => {
-            notifyUser(alert);
+chrome.storage.onChanged.addListener(function({ triggeredAlerts }, namespace) {
+    console.log('chrome.storage.onChanged: ', triggeredAlerts, namespace);
+
+    if (triggeredAlerts.newValue.results) {
+        triggeredAlerts.newValue.results.map((triggeredAlert) => {
+            notifyUser(triggeredAlert);
         });
     }
 });
@@ -11,14 +13,13 @@ chrome.storage.onChanged.addListener(function({ triggeredAlerts: { newValue: { r
 chrome.notifications.onClicked.addListener((notificationId) => {
     // TODO:: navigate to discover
     console.log('chrome.notifications.onClicked: ', notificationId);
+
     chrome.notifications.clear(notificationId || '', () => {
         console.log('chrome.notifications.clear: ', notificationId);
     });
-});
 
-function genNotificationId() {
-    return 'triggeredAlerts' + Date.now();
-}
+    chrome.tabs.create({ url: trigeredAlertDrillDown });
+});
 
 function clearAll() {
     return new Promise((resolve) => {
@@ -41,17 +42,17 @@ function clearAll() {
     });
 }
 
-async function notifyUser(alert) {
+async function notifyUser(triggeredAlert) {
     var opt = {
         type: "basic",
-        title: `${alert.severity} Severity Alert`,
-        message: `${alert.name}`,
+        title: `${triggeredAlert.severity} Severity Alert`,
+        message: `${triggeredAlert.name}`,
         iconUrl: "logzio.logo.128.png",
     }
 
-    // await clearAll();
+    await clearAll();
 
-    chrome.notifications.create(`triggeredAlerts${alert.alertId}`, opt, (...args) => {
+    chrome.notifications.create(`triggeredAlerts${triggeredAlert.alertId}`, opt, (...args) => {
         console.log("notification call back:", ...args);
     });
 }

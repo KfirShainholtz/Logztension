@@ -3,15 +3,16 @@ var triggeredAlertsUrl = `${baseUrl}/alerts/triggered-alerts`;
 
 var requestData = JSON.stringify({
     "from": 0,
-    "size": 5,
+    "size": 1,
     "severities": [
         "HIGH"
     ],
     "sortBy": "DATE",
-    "sortOrder": "ASC"
+    "sortOrder": "DESC"
 });
 
 function updateBadge(triggeredAlertsResponse) {
+    triggeredAlertsResponse.mish = Date.now();
     chrome.storage.sync.set({'triggeredAlerts': triggeredAlertsResponse});
     chrome.browserAction.setBadgeText({"text": String(triggeredAlertsResponse.results.length)});
     chrome.browserAction.setBadgeBackgroundColor({color: 'red'});
