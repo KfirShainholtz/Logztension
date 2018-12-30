@@ -1,5 +1,5 @@
 const contextMenuId = "scrapeIps";
-const drilldownUrlTemplate = (apiToken, ip) => `https://app.logz.io/#/dashboard/security/research/dashboard/b0b999d0-6d8d-11e8-a6da-41e4bf1b98f8?drilldown=${ip}`
+const drilldownUrlTemplate = (ip) => `https://app.logz.io/#/dashboard/kibana/dashboard/2e831c30-0c42-11e9-9294-97c78f8e487b?drilldown=${ip}`
 
 const contextMenuItem = {
     "id": contextMenuId,
