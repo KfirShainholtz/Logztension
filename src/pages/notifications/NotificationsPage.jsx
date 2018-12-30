@@ -1,7 +1,17 @@
+/*global chrome*/
 import React from "react";
 import {Notification} from "./Notification";
 
-export class NotificationsPageContainer extends React.Component {
+const alertsHeader = {
+    fontSize: '14px',
+    color: '#1C1E21',
+};
+
+const alertsBody = {
+    margin: '30px',
+};
+
+export class NotificationsPage extends React.Component {
     state = {
         triggeredAlerts: [],
     };
@@ -16,7 +26,12 @@ export class NotificationsPageContainer extends React.Component {
             (alert) => <Notification title={alert.name} timestamp={alert.eventDate}/>);
         return (
             <div>
-                {notifications}
+                <div style={alertsHeader}>
+                    Alerts
+                </div>
+                <div style={alertsBody}>
+                    {notifications}
+                </div>
             </div>
         );
     }
