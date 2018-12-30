@@ -11,6 +11,7 @@ import {
 } from "react-router-dom";
 import { LoginPage } from './pages/login/LoginPage';
 import { NotificationsPage } from './pages/notifications/NotificationsPage'
+import {PrivateRoute} from "./pages/utilities/PrivateRoute";
 
 const styles = theme => ({
   root: {
@@ -26,30 +27,33 @@ const styles = theme => ({
 });
 
 class App extends Component {
+    state = {
+        isConnected: null,
+        isLoading: true,
+    };
 
-  render() {
+    componentWillMount() {
+        chrome.storage.sync.get('authToken',
+            ({authToken}) => this.setState({isConnected: Boolean(authToken), isLoading: false}));
+    }
 
-    const { classes } = this.props;
+    render() {
+        const { classes } = this.props;
 
-    return (
-      <div className={classes.root}>
-          <Router>
-              <div>
-                  <ul>
-                      <li>
-                          <Link to="/login">Login Page</Link>
-                      </li>
-                      <li>
-                          <Link to="/notifications">Notifications Page</Link>
-                      </li>
-                  </ul>
-                  <Route path="/notifications" component={NotificationsPage} />
-                  <Route path="/login" component={LoginPage} />
-              </div>
-          </Router>
-    </div>
-    );
-  }
+        return (
+            <div className={classes.root}>
+                <Router>
+                    <div>
+                        {this.state.isConnected ?
+                            <Redirect to="/notifications"/> :
+                            <Redirect to="/login" />}
+                        <Route path="/login" component={LoginPage} />
+                        <PrivateRoute path="/notifications" component={NotificationsPage} />
+                    </div>
+                </Router>
+            </div>
+            );
+    }
 }
 
 export default withStyles(styles)(App);
