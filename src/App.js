@@ -2,7 +2,16 @@
 import React, { Component } from 'react';
 import './App.css';
 import { withStyles } from '@material-ui/core/styles';
-import { Grid, Paper } from '@material-ui/core';
+import {
+    BrowserRouter as Router,
+    Route,
+    Link,
+    Redirect,
+    withRouter
+} from "react-router-dom";
+import { LoginPage } from './pages/login/LoginPage';
+import { NotificationsPage } from './pages/notifications/NotificationsPage'
+import {PrivateRoute} from "./pages/utilities/PrivateRoute";
 
 const styles = theme => ({
   root: {
@@ -18,39 +27,33 @@ const styles = theme => ({
 });
 
 class App extends Component {
+    state = {
+        isConnected: null,
+        isLoading: true,
+    };
 
-  render() {
+    componentWillMount() {
+        chrome.storage.sync.get('authToken',
+            ({authToken}) => this.setState({isConnected: Boolean(authToken), isLoading: false}));
+    }
 
-    const { classes } = this.props;
+    render() {
+        const { classes } = this.props;
 
-    return (
-      <div className={classes.root}>
-        <Grid container spacing={12}>
-          <Grid item xs={12}>
-            <Paper className={classes.paper}>xs=12</Paper>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Paper className={classes.paper}>xs=12 sm=6</Paper>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Paper className={classes.paper}>xs=12 sm=6</Paper>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <Paper className={classes.paper}>xs=6 sm=3</Paper>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <Paper className={classes.paper}>xs=6 sm=3</Paper>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <Paper className={classes.paper}>xs=6 sm=3</Paper>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <Paper className={classes.paper}>xs=6 sm=3</Paper>
-          </Grid>
-        </Grid>
-    </div>
-    );
-  }
+        return (
+            <div className={classes.root}>
+                <Router>
+                    <div>
+                        {this.state.isConnected ?
+                            <Redirect to="/notifications"/> :
+                            <Redirect to="/login" />}
+                        <Route path="/login" component={LoginPage} />
+                        <PrivateRoute path="/notifications" component={NotificationsPage} />
+                    </div>
+                </Router>
+            </div>
+            );
+    }
 }
 
 export default withStyles(styles)(App);
