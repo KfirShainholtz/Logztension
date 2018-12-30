@@ -11,9 +11,7 @@ chrome.storage.onChanged.addListener(function({ triggeredAlerts }, namespace) {
 });
 
 chrome.notifications.onClicked.addListener((notificationId) => {
-    // TODO:: navigate to discover
     console.log('chrome.notifications.onClicked: ', notificationId);
-
     chrome.notifications.clear(notificationId || '', () => {
         console.log('chrome.notifications.clear: ', notificationId);
     });
@@ -47,7 +45,7 @@ async function notifyUser(triggeredAlert) {
         type: "basic",
         title: `${triggeredAlert.severity} Severity Alert`,
         message: `${triggeredAlert.name}`,
-        iconUrl: "logzio.logo.128.png",
+        iconUrl: "alerts_events.png",
     }
 
     await clearAll();

@@ -17,7 +17,7 @@
   },
   "content_security_policy": "script-src 'self' 'sha256-GgRxrVOKNdB4LrRsVPDSbzvfdV4UqglmviH9GoBJ5jk='; object-src 'self'",
   "background": {
-    "scripts": ["app/background.js", "app/notifications.js", "app/drilldown.js"]
+    "scripts": ["app/fetchTriggeredAlerts.js", "app/notifications.js", "app/drilldown.js"]
   },
   "permissions": [
     "notifications",

@@ -9,15 +9,15 @@ import {
     Redirect,
     withRouter
 } from "react-router-dom";
-import { LoginPage } from './pages/login/LoginPage';
-import { NotificationsPage } from './pages/notifications/NotificationsPage'
+import LoginPage from './pages/login/LoginPage';
+import { NotificationsPageContainer } from './pages/notifications/NotificationsPageContainer';
 import {PrivateRoute} from "./pages/utilities/PrivateRoute";
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    width: 250,
-    height: 300,
+    width: 400,
+    height: 420,
   },
   paper: {
     padding: theme.spacing.unit * 2,
@@ -33,8 +33,8 @@ class App extends Component {
     };
 
     componentWillMount() {
-        chrome.storage.sync.get('authToken',
-            ({authToken}) => this.setState({isConnected: Boolean(authToken), isLoading: false}));
+        chrome.storage.sync.get('apiToken',
+            ({apiToken}) => this.setState({isConnected: Boolean(apiToken), isLoading: false}));
     }
 
     render() {
@@ -48,7 +48,7 @@ class App extends Component {
                             <Redirect to="/notifications"/> :
                             <Redirect to="/login" />}
                         <Route path="/login" component={LoginPage} />
-                        <PrivateRoute path="/notifications" component={NotificationsPage} />
+                        <PrivateRoute path="/notifications" component={NotificationsPageContainer} />
                     </div>
                 </Router>
             </div>
