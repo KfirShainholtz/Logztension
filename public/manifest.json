@@ -20,6 +20,7 @@
     "scripts": ["app/fetchTriggeredAlerts.js", "app/notifications.js", "app/drilldown.js"]
   },
   "permissions": [
+    "activeTab",
     "notifications",
     "storage",
     "*://*.logz.io/*",

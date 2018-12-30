@@ -48,9 +48,13 @@ function handleTriggeredAlerts() {
             response.lastAlert = getLastTriggerDate(response.results);
 
             chrome.storage.sync.get('triggeredAlerts', ({ triggeredAlerts }) => {
-                if(response.lastAlert > getLastTriggerDate(triggeredAlerts.results)) {
-                    addTriggeredAlert(triggeredAlerts.results, response.results);
+                if(triggeredAlerts) {
+                    if(response.lastAlert > getLastTriggerDate(triggeredAlerts.results)) {
+                        addTriggeredAlert(triggeredAlerts.results, response.results);
+                    }
                     updateBadge(triggeredAlerts);
+                } else {
+                    updateBadge(response);
                 }
             });
         }
