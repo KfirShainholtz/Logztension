@@ -34,7 +34,7 @@ function getLastTriggerDate(items) {
 }
 
 function addTriggeredAlert(target, newData) {
-    if(target.length > 10) {
+    if(target.length >= 10) {
         target.shift();
     }
     target.push(newData[0]);

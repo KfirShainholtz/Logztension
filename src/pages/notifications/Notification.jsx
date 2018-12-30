@@ -16,7 +16,8 @@ const titleStyle = {
 const timestampStyle = {
     fontSize: '15px',
     color: '#797D82',
-    align: 'right',
+    textAlign: 'right',
+
 };
 
 const editAlert = (id) => `https://app.logz.io/#/dashboard/alerts/optimizer-wizard/${id}`;
