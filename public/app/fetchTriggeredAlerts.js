@@ -2,6 +2,8 @@
 
 var baseUrl = 'http://k8s-1-prod-us-east-1.internal.logz.io:30004';
 var triggeredAlertsUrl = `${baseUrl}/alerts/triggered-alerts`;
+var requestApiToken = null;
+var fetcherTimer = null;
 
 var requestData = JSON.stringify({
     "from": 0,
@@ -52,22 +54,39 @@ function handleTriggeredAlerts() {
                 }
             });
         }
-        setTimeout(() => getLatestTriggeredAlerts(), 5000);
+        fetcherTimer = setTimeout(() => getLatestTriggeredAlerts(), 5000);
     }
 }
 
-function getLatestTriggeredAlerts() {
+function getLatestTriggeredAlerts(apiToken) {
     chrome.storage.sync.get('NotificationsActive', ({ NotificationsActive }) => {
         console.log('fetch triggered alerts, NotificationsActive: ', NotificationsActive);
         if(NotificationsActive !== false) {
             var xhr = new XMLHttpRequest();
             xhr.open('POST', triggeredAlertsUrl, true);
             xhr.setRequestHeader('Content-Type', 'application/json');
-            xhr.setRequestHeader('X-API-TOKEN', 'b5c906c8-7c72-4364-b5a1-0ed5c74ce185');
+            xhr.setRequestHeader('X-API-TOKEN', requestApiToken);
             xhr.onreadystatechange = handleTriggeredAlerts;
             xhr.send(requestData);
         }
     });
 }
 
-getLatestTriggeredAlerts();
+chrome.storage.sync.get('apiToken', ({ apiToken }) => {
+    console.log('apiToken.addListener: ', apiToken);
+    if(apiToken) {
+        requestApiToken = apiToken;
+        clearTimeout(fetcherTimer);
+        getLatestTriggeredAlerts();
+    }
+});
+
+chrome.storage.onChanged.addListener(function({ apiToken }) {
+    console.log('apiToken.addListener: ', apiToken);
+    if(apiToken && apiToken.newValue) {
+        requestApiToken = apiToken.newValue;
+        clearTimeout(fetcherTimer);
+        getLatestTriggeredAlerts();
+    }
+});
+
