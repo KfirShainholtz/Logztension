@@ -19,7 +19,7 @@
   },
   "watch": {
     "test": "{src,test,build}/*.js build",
-    "build": "src/"
+    "build": "{src,public/**/}/"
   },
   "eslintConfig": {
     "extends": "react-app"
