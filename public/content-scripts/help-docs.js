@@ -8,9 +8,10 @@ function injectDocsIframe() {
     iframe.style.right = "0px";
     iframe.style.zIndex = "9000000000000000000";
     iframe.frameBorder = "none";
+    iframe.style.display = "none";
     iframe.src = "https://docs.logz.io/";
 
     document.body.appendChild(iframe);
 }
 
-setTimeout(() => injectDocsIframe(), 5000);
+injectDocsIframe();

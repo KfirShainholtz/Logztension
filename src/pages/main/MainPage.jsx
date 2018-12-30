@@ -31,6 +31,15 @@ class MainPage extends React.Component {
         if(value === 'logout'){
            this.logout();
         }
+        if(value === 'docs'){
+            this.openDocs();
+        }
+    }
+
+    openDocs() {
+        chrome.storage.sync.set({ 'toggleDocsIframe': Date.now() }, () => {
+            console.log('MainPage::openDocs', arguments);
+        });
     }
 
     logout() {
@@ -66,7 +75,7 @@ class MainPage extends React.Component {
                     showLabels
                 >
                     <BottomNavigationAction label="Logz.io" href="https://app.logz.io/" target="_blank"/>
-                    <BottomNavigationAction label="Logz.io Docs" href="https://docs.logz.io/" target="_blank"/>
+                    <BottomNavigationAction label="Logz.io Docs" value="docs"/>
                     <BottomNavigationAction value="logout" label="Logout" />
                 </BottomNavigation>
 

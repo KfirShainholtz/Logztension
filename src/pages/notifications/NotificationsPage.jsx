@@ -4,7 +4,7 @@ import {Notification} from "./Notification";
 import Switch from "@material-ui/core/Switch/Switch";
 
 const alertsBody = {
-    margin: '10px 30px',
+    padding: '10px 30px',
     height: '300px', 
     overflowY: 'scroll',
 };
