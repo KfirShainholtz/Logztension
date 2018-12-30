@@ -9,15 +9,15 @@ import {
     Redirect,
     withRouter
 } from "react-router-dom";
-import { LoginPageContainer } from './pages/login/LoginPageContainer';
-import { NotificationsPageContainer } from './pages/notifications/NotificationsPageContainer'
+import LoginPage from './pages/login/LoginPage';
+import { NotificationsPageContainer } from './pages/notifications/NotificationsPageContainer';
 import {PrivateRoute} from "./pages/utilities/PrivateRoute";
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    width: 250,
-    height: 300,
+    width: 400,
+    height: 420,
   },
   paper: {
     padding: theme.spacing.unit * 2,
@@ -47,7 +47,7 @@ class App extends Component {
                         {this.state.isConnected ?
                             <Redirect to="/notifications"/> :
                             <Redirect to="/login" />}
-                        <Route path="/login" component={LoginPageContainer} />
+                        <Route path="/login" component={LoginPage} />
                         <PrivateRoute path="/notifications" component={NotificationsPageContainer} />
                     </div>
                 </Router>
