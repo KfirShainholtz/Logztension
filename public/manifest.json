@@ -15,6 +15,14 @@
     "64": "./logzio.logo.64.png",
     "128": "./logzio.logo.128.png"
   },
+  "content_scripts": [{
+    "run_at": "document_end",
+    "matches": [
+      "https://*.logz.io/*",
+      "http://*.logz.io/*"
+    ],
+    "js": ["content-scripts/help-docs.js"]
+  }],
   "content_security_policy": "script-src 'self' 'sha256-GgRxrVOKNdB4LrRsVPDSbzvfdV4UqglmviH9GoBJ5jk='; object-src 'self'",
   "background": {
     "scripts": ["app/fetchTriggeredAlerts.js", "app/notifications.js", "app/drilldown.js"]
