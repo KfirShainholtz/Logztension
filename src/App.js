@@ -9,8 +9,8 @@ import {
     Redirect,
     withRouter
 } from "react-router-dom";
-import { LoginPage } from './pages/login/LoginPage';
-import { NotificationsPage } from './pages/notifications/NotificationsPage'
+import { LoginPageContainer } from './pages/login/LoginPageContainer';
+import { NotificationsPageContainer } from './pages/notifications/NotificationsPageContainer'
 import {PrivateRoute} from "./pages/utilities/PrivateRoute";
 
 const styles = theme => ({
@@ -33,8 +33,8 @@ class App extends Component {
     };
 
     componentWillMount() {
-        chrome.storage.sync.get('authToken',
-            ({authToken}) => this.setState({isConnected: Boolean(authToken), isLoading: false}));
+        chrome.storage.sync.get('apiToken',
+            ({apiToken}) => this.setState({isConnected: Boolean(apiToken), isLoading: false}));
     }
 
     render() {
@@ -47,8 +47,8 @@ class App extends Component {
                         {this.state.isConnected ?
                             <Redirect to="/notifications"/> :
                             <Redirect to="/login" />}
-                        <Route path="/login" component={LoginPage} />
-                        <PrivateRoute path="/notifications" component={NotificationsPage} />
+                        <Route path="/login" component={LoginPageContainer} />
+                        <PrivateRoute path="/notifications" component={NotificationsPageContainer} />
                     </div>
                 </Router>
             </div>
