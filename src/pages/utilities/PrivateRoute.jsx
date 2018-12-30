@@ -9,8 +9,20 @@ export class PrivateRoute extends React.Component {
     };
 
     componentWillMount() {
-        chrome.storage.sync.get('apiToken',
-            ({apiToken}) => this.setState({isConnected: Boolean(apiToken), isLoading: false}));
+        chrome.storage.sync.get('apiToken', ({ apiToken }) => { 
+            this.setState({
+                isConnected: Boolean(apiToken), 
+                isLoading: false
+            });
+        });
+
+        chrome.storage.onChanged.addListener(({ apiToken }) => {
+            if(apiToken) {
+                this.setState({
+                    isConnected: Boolean(apiToken.newValue), 
+                });
+            }
+        });
     }
 
     render() {
@@ -20,9 +32,10 @@ export class PrivateRoute extends React.Component {
                 path={this.props.path}
                 render={props =>
                     this.state.isConnected ?
-                        (<Component {...props} />) :
-                        (<Redirect to={'/login'}/>)
+                    (<Component {...props} />) :
+                    (<Redirect to={'/login'}/>)
                 }
-            />);
+                />
+            );
     }
 }

@@ -10,6 +10,7 @@ import {
     withRouter
 } from "react-router-dom";
 import LoginPage from './pages/login/LoginPage';
+import MainPage from './pages/main/MainPage';
 import { NotificationsPage } from './pages/notifications/NotificationsPage';
 import {PrivateRoute} from "./pages/utilities/PrivateRoute";
 
@@ -41,18 +42,16 @@ class App extends Component {
         const { classes } = this.props;
 
         return (
-            <div className={classes.root}>
-                <Router>
-                    <div>
-                        {this.state.isConnected ?
-                            <Redirect to="/notifications"/> :
-                            <Redirect to="/login" />}
-                        <Route path="/login" component={LoginPage} />
-                        <PrivateRoute path="/notifications" component={NotificationsPage} />
-                    </div>
-                </Router>
-            </div>
-            );
+          <div className={classes.root}>
+              <Router>
+                  <div>
+                      <Route path="/login" component={LoginPage} />
+                      <Redirect from="/" to='/notification' />
+                      <PrivateRoute path="/" component={MainPage} />
+                  </div>
+              </Router>
+          </div>
+        );
     }
 }
 
