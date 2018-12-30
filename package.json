@@ -18,7 +18,8 @@
     "watch": "npm-watch"
   },
   "watch": {
-    "build": "--watch"
+    "test": "{src,test,build}/*.js build",
+    "build": "src/"
   },
   "eslintConfig": {
     "extends": "react-app"
