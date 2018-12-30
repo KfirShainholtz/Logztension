@@ -1,44 +1,56 @@
 /* global chrome */
-
 import React, { Component } from 'react';
 import './App.css';
+import { withStyles } from '@material-ui/core/styles';
+import { Grid, Paper } from '@material-ui/core';
 
-const trigeredAlertDrillDown = "https://app.logz.io/#/dashboard/kibana/discover?_a=(columns:!(message),filters:!(),query:(language:lucene,query:'type:%20auto-scaler%20AND%20%22error%20occurred%20while%20calculating%20execution%20for%20autoScalingGroup%22%20AND%20NOT%20%22io.logz.auto.scaler.exception.ServersRateNotFound%22'),sort:!('@timestamp',desc))&_g=(refreshInterval:(display:Off,section:0,value:0),time:(from:'2018-12-26T20:39:52.925Z',mode:absolute,to:'2018-12-29T20:39:52.925Z'))&accountIds=16987&accountIds=300";
+const styles = theme => ({
+  root: {
+    flexGrow: 1,
+    width: 250,
+    height: 300,
+  },
+  paper: {
+    padding: theme.spacing.unit * 2,
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  },
+});
 
 class App extends Component {
 
-  state = { triggeredAlerts: null };
-
-  alertLink(alert) {
-    return <a className="App-link" href={trigeredAlertDrillDown} target="_blank" rel="noopener noreferrer">{alert.name}</a>;
-  }
-
-  getTriggeredAlertsList(alerts) {
-      const listItems = alerts.map((alert, index) =>
-          <li key={index}>{this.alertLink(alert)}</li>
-      );
-
-      return (<ul className="triggered-alerts-list">{listItems}</ul>);
-  }
-
-  componentWillMount() {
-    chrome.storage.sync.get('triggeredAlerts', ({ triggeredAlerts }) => this.setState({ triggeredAlerts }));
-  }
-
   render() {
-    if (this.state.triggeredAlerts === null) {
-      return 'Loading...'
-    } else {
-      return (
-          <div className="App">
-            <header className="App-header">
-                Logz.io
-                {this.getTriggeredAlertsList(this.state.triggeredAlerts.results)}
-            </header>
-          </div>
-      );
-    }
+
+    const { classes } = this.props;
+
+    return (
+      <div className={classes.root}>
+        <Grid container spacing={12}>
+          <Grid item xs={12}>
+            <Paper className={classes.paper}>xs=12</Paper>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Paper className={classes.paper}>xs=12 sm=6</Paper>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Paper className={classes.paper}>xs=12 sm=6</Paper>
+          </Grid>
+          <Grid item xs={6} sm={3}>
+            <Paper className={classes.paper}>xs=6 sm=3</Paper>
+          </Grid>
+          <Grid item xs={6} sm={3}>
+            <Paper className={classes.paper}>xs=6 sm=3</Paper>
+          </Grid>
+          <Grid item xs={6} sm={3}>
+            <Paper className={classes.paper}>xs=6 sm=3</Paper>
+          </Grid>
+          <Grid item xs={6} sm={3}>
+            <Paper className={classes.paper}>xs=6 sm=3</Paper>
+          </Grid>
+        </Grid>
+    </div>
+    );
   }
 }
 
-export default App;
+export default withStyles(styles)(App);
