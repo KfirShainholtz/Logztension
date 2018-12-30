@@ -4,16 +4,9 @@ import {Notification} from "./Notification";
 import Switch from "@material-ui/core/Switch/Switch";
 
 const alertsBody = {
-    margin: '30px',
-};
-
-const alertsFooter = {
-    // position: 'fixed',
-    // bottom: 0,
-    width: '100%',
-    marginLeft: '10px',
-    marginRight: '30px',
-    marginBottom: '56px',
+    padding: '10px 30px',
+    height: '300px', 
+    overflowY: 'scroll',
 };
 
 export class NotificationsPage extends React.Component {
@@ -51,10 +44,7 @@ export class NotificationsPage extends React.Component {
 
         return (
             <div>
-                <div style={alertsBody}>
-                    {notifications}
-                </div>
-                <div style={alertsFooter}>
+                 <div>
                     <Switch
                         checked={this.state.notificationsActive}
                         onChange={this.handleChange('notificationsActive')}
@@ -63,6 +53,9 @@ export class NotificationsPage extends React.Component {
                     />
                     Notifications is
                     <label>{this.state.notificationsActive ? ' on' : ' off'}</label>
+                </div>
+                <div style={alertsBody}>
+                    {notifications}
                 </div>
             </div>
         );
