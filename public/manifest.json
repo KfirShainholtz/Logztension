@@ -1,0 +1,26 @@
+{
+  "manifest_version": 2,
+
+  "name": "Logz.io Extension",
+  "description": "Logz.io Chrome extension",
+  "version": "0.0.1",
+
+  "browser_action": {
+    "default_popup": "index.html",
+    "default_title": "Logz.io",
+    "default_icon": "logzio.logo.128.png"
+  },
+  "icons": {
+    "48": "./logzio.logo.64.png",
+    "64": "./logzio.logo.64.png",
+    "128": "./logzio.logo.128.png"
+  },
+  "content_security_policy": "script-src 'self' 'sha256-GgRxrVOKNdB4LrRsVPDSbzvfdV4UqglmviH9GoBJ5jk='; object-src 'self'",
+  "background": {
+    "scripts": ["app/background.js"]
+  },
+  "permissions": [
+    "storage",
+    "*://*.logz.io/*"
+  ]
+}
