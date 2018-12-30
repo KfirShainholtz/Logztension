@@ -4,7 +4,11 @@ var triggeredAlertsUrl = `${baseUrl}/alerts/triggered-alerts`;
 var requestData = JSON.stringify({
     "from": 0,
     "size": 1,
-    "severities": ["LOW", "MEDIUM", "HIGH"],
+    "severities": [
+        "LOW",
+        "MEDIUM",
+        "HIGH"
+    ],
     "sortBy": "DATE",
     "sortOrder": "DESC"
 });
@@ -51,13 +55,17 @@ function handleTriggeredAlerts() {
 }
 
 function getLatestTriggeredAlerts() {
-    console.log('fetch triggered alerts');
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', triggeredAlertsUrl, true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.setRequestHeader('X-API-TOKEN', 'b5c906c8-7c72-4364-b5a1-0ed5c74ce185');
-    xhr.onreadystatechange = handleTriggeredAlerts;
-    xhr.send(requestData);
+    chrome.storage.sync.get('NotificationsActive', ({ NotificationsActive }) => {
+        console.log('fetch triggered alerts, NotificationsActive: ', NotificationsActive);
+        if(NotificationsActive !== false) {
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', triggeredAlertsUrl, true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.setRequestHeader('X-API-TOKEN', 'b5c906c8-7c72-4364-b5a1-0ed5c74ce185');
+            xhr.onreadystatechange = handleTriggeredAlerts;
+            xhr.send(requestData);
+        }
+    });
 }
 
 getLatestTriggeredAlerts();
