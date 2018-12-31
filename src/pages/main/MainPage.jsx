@@ -37,8 +37,22 @@ class MainPage extends React.Component {
     }
 
     openDocs() {
-        chrome.storage.sync.set({ 'toggleDocsIframe': Date.now() }, () => {
-            console.log('MainPage::openDocs', arguments);
+        chrome.tabs.getSelected(null, function(tab) {
+            console.log('getSelected tab:', tab);
+
+            if (tab.url.includes('logz.io')) {
+                console.log('MainPage::toggle-docs', arguments);
+                // chrome.tabs.executeScript({file: 'content-scripts/toggle-docs.js'});
+                chrome.tabs.executeScript({code: 'console.log(\'docsIframe.style.display before:\', document.getElementById(\'help-docs\').style.display);\n' +
+                        'if (document.getElementById(\'help-docs\').style.display === "none") {\n' +
+                        '    document.getElementById(\'help-docs\').style.display = "block";\n' +
+                        '} else {\n' +
+                        '    document.getElementById(\'help-docs\').style.display = "none";\n' +
+                        '}\n' +
+                        'console.log(\'docsIframe.style.display after:\', document.getElementById(\'help-docs\').style.display);\n'});
+            } else {
+                chrome.tabs.create({ url: 'https://docs.logz.io/' });
+            }
         });
     }
 

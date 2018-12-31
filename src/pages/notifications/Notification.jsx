@@ -20,7 +20,7 @@ const timestampStyle = {
 
 };
 
-const editAlert = (id) => `https://app.logz.io/#/dashboard/alerts/optimizer-wizard/${id}`;
+const editAlert = (id) => `https://app.logz.io/#/dashboard/alerts/optimizer-wizard/27764`;
 const toDate = (unixTime) => moment.unix(unixTime).format('HH:mm:ss');
 
 export const Notification = (props) => {

@@ -10,8 +10,25 @@ function injectDocsIframe() {
     iframe.frameBorder = "none";
     iframe.style.display = "none";
     iframe.src = "https://docs.logz.io/";
+    iframe.setAttribute('id', 'help-docs');
 
     document.body.appendChild(iframe);
 }
 
 injectDocsIframe();
+
+// function hashHandler() {
+//     console.log('The hash has changed!', window.location);
+// }
+//
+// window.addEventListener('hashchange', hashHandler, false);
+
+// if (message.data == "setAlarm") {
+//     chrome.alarms.create({delayInMinutes: 5})
+// }
+// else if (message.data == “runLogic”) {
+//     chrome.tabs.executeScript({file: 'logic.js'});
+// } else if (message.data == “changeColor”) {
+//     chrome.tabs.executeScript(
+//         {code: 'document.body.style.backgroundColor="orange"'});
+// };
